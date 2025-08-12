@@ -1,69 +1,73 @@
-# React + TypeScript + Vite
+# Resume Tailor Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The Electron + React frontend for the Resume Tailor desktop application.
 
-Currently, two official plugins are available:
+## 🚀 Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Option 1: Local Development (Recommended - Full Electron Experience)
+```bash
+# From this directory (frontend/)
+npm install
+npm run dev
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# This opens the full Electron desktop app with all features
+# May conflict with other apps on port 3000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Option 2: Containerized Development (Vite Only)
+```bash
+# From the project root (UserTest/)
+docker-compose up --build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Access at http://localhost:4000 (no port conflicts!)
+# Note: This runs only Vite, not Electron
 ```
+
+## 🔧 Development Commands
+
+```bash
+npm run dev              # Start Vite + Electron (full experience - RECOMMENDED)
+npm run vite:dev         # Start only Vite dev server
+npm run build            # Build React app + Electron
+npm run build:electron   # Build only Electron TypeScript
+npm run lint             # Run ESLint
+npm run preview          # Preview production build
+```
+
+## 📁 Frontend Structure
+
+```
+frontend/
+├── src/                 # React app source
+│   ├── App.tsx         # Main application component
+│   ├── main.tsx        # React entry point
+│   └── vite-env.d.ts   # TypeScript declarations
+├── electron/            # Electron main process (TypeScript)
+│   ├── main.ts         # Main process entry
+│   ├── preload.ts      # Preload script
+│   ├── ipc/            # IPC handlers
+│   ├── services/       # Business logic
+│   └── utils/          # Utility functions
+├── electron-dist/       # Compiled Electron files
+├── dist/               # Built React app
+└── Dockerfile.dev      # Development container
+```
+
+## 🌐 Access Points
+
+- **Containerized**: http://localhost:4000 ✅ (recommended)
+- **Local**: http://localhost:3000 (may conflict)
+- **Electron App**: Opens automatically after build
+
+## 🔗 Related Files
+
+- **Root Docker Setup**: See `../docker-compose.yml`
+- **Project Overview**: See `../README.md`
+- **Development**: See `../docker-compose.override.yml`
+
+## 📝 Notes
+
+- This frontend is designed to work with the containerized setup
+- Electron processes run in the container environment
+- All dependencies are managed at the project root level
+- Ready for backend integration via Docker services
